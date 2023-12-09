@@ -1,11 +1,10 @@
 import { View, StyleSheet } from 'react-native'
-import { Feather } from '@expo/vector-icons'  // 'Feather' は使用されていないため、削除してください
+// import { Feather } from '@expo/vector-icons'
 
 import Header from '../../components/Header'
 import MemoListItem from '../../components/MemoListItem'
 import CircleButton from '../../components/CircleButton'
 import Icon from '../../components/Icon'
-import React from 'react'
 
 const Index = (): JSX.Element => {
   return (
@@ -19,7 +18,7 @@ const Index = (): JSX.Element => {
         </View>
 
         <CircleButton>
-            <Icon />
+            <Icon name='plus' size={40} color='#ffffff'/>
         </CircleButton>
 
     </View>
