@@ -1,20 +1,25 @@
-import { View, StyleSheet } from 'react-native'
-// import { Feather } from '@expo/vector-icons'
+import { View, Text, StyleSheet } from 'react-native'
+import { router, useNavigation } from 'expo-router'
+import { useEffect } from 'react'
 
-import Header from '../../components/Header'
 import MemoListItem from '../../components/MemoListItem'
 import CircleButton from '../../components/CircleButton'
 import Icon from '../../components/Icon'
-import { router } from 'expo-router'
 
 const handlePress = (): void => {
   router.push('/memo/create')
 }
 
 const Index = (): JSX.Element => {
+  const navigation = useNavigation()
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => { return <Text>Test</Text> }
+    })
+  }, [])
+
   return (
     <View style={styles.container}>
-        <Header />
 
         <View>
             <MemoListItem />

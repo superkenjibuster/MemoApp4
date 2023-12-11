@@ -5,18 +5,16 @@ import {
 
 import { Link, router } from 'expo-router'
 
-import Header from '../../components/Header'
 import Button from '../../components/Button'
 
 const handlePress = (): void => {
 /*   //ログイン画面をあとで作成する */
-  router.push('/memo/list')
+  router.replace('/memo/list')
 }
 
 const LogIn = (): JSX.Element => {
   return (
     <View style={styles.conatiner}>
-      <Header />
       <View style={styles.inner}>
         <Text style={styles.title}>Log In</Text>
         <TextInput style={styles.input} value='Email address' />
@@ -66,7 +64,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     marginRight: 8,
-    color: 'F000000'
+    color: '#000000'
   },
   fotterLink: {
     fontSize: 14,
