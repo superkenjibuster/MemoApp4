@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 
 import { Link, router } from 'expo-router'
+import { useState } from 'react'
 
 import Button from '../../components/Button'
 
@@ -13,12 +14,30 @@ const handlePress = (): void => {
 }
 
 const SignUp = (): JSX.Element => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   return (
     <View style={styles.conatiner}>
       <View style={styles.inner}>
         <Text style={styles.title}>Sign Up</Text>
-        <TextInput style={styles.input} value='Email address' />
-        <TextInput style={styles.input} value='PassWord' />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={(text) => { setEmail(text) }}
+          autoCapitalize='none'
+          keyboardType='email-address'
+          placeholder='Email Address'
+          textContentType='emailAddress'
+          />
+        <TextInput
+          style={styles.input}
+          value={password}
+          onChangeText={(text) => { setPassword(text) }}
+          autoCapitalize='none'
+          secureTextEntry
+          placeholder='PassWord'
+          textContentType='password'
+          />
         <Button label='Submit' onPress={handlePress} />
         <View style={styles.fotter}>
           <Text style={styles.fotterText}>Already registered?</Text>
