@@ -1,16 +1,28 @@
 import {
-  View, Text, TextInput,
+  View, Text, TextInput, Alert,
   TouchableOpacity, StyleSheet
 } from 'react-native'
 
 import { Link, router } from 'expo-router'
 import { useState } from 'react'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
+import { auth } from '../../config'
 import Button from '../../components/Button'
 
-const handlePress = (): void => {
-/*   //会員画面をあとで作成する */
-  router.push('/memo/list')
+const handlePress = (email: string, password: string): void => {
+  // 会員登録
+  console.log(email, password)
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential.user.uid)
+      router.replace('/memo/list')
+    })
+    .catch((error) => {
+      const { code, message } = error
+      console.log(code, message)
+      Alert.alert(message)
+    })
 }
 
 const SignUp = (): JSX.Element => {
@@ -38,10 +50,10 @@ const SignUp = (): JSX.Element => {
           placeholder='PassWord'
           textContentType='password'
           />
-        <Button label='Submit' onPress={handlePress} />
+        <Button label='Submit' onPress={() => { handlePress(email, password) }} />
         <View style={styles.fotter}>
           <Text style={styles.fotterText}>Already registered?</Text>
-          <Link href='/auth/log_in' asChild>
+          <Link href='/auth/log_in' asChild replace>
             <TouchableOpacity>
               <Text style={styles.fotterLink}>Log in</Text>
             </TouchableOpacity>
@@ -83,7 +95,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 24,
     marginRight: 8,
-    color: '#00000'
+    color: '#000000'
   },
   fotterLink: {
     fontSize: 14,
