@@ -37,6 +37,7 @@ const List = (): JSX.Element => {
           updatedAt
         })
       })
+      console.log(remoteMemos)//
       setMemos(remoteMemos)
     })
     return unsubscribe
