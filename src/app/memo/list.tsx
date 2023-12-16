@@ -1,21 +1,21 @@
 import { View, StyleSheet } from 'react-native'
 import { router, useNavigation } from 'expo-router'
-import { useEffect, useState } from 'react'
-import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
+import { useEffect/* , useState */ } from 'react'
+import { collection, onSnapshot, query/* , orderBy  */ } from 'firebase/firestore'
 
 import MemoListItem from '../../components/MemoListItem'
 import CircleButton from '../../components/CircleButton'
 import Icon from '../../components/Icon'
 import LogOutButton from '../../components/LogOutButton'
 import { db, auth } from '../../config'
-import { type Memo } from '../../../types/memo'
+/* import { type Memo } from '../../../types/memo' */
 
 const handlePress = (): void => {
   router.push('/memo/create')
 }
 
 const List = (): JSX.Element => {
-  const [memos, setMemos] = useState<Memo[]>([])
+/*   const [memos, setMemos] = useState([]) */
   const navigation = useNavigation()
   useEffect(() => {
     navigation.setOptions({
@@ -25,28 +25,31 @@ const List = (): JSX.Element => {
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const ref = collection(db, `users/${auth.currentUser.uid}/memos`)
-    const q = query(ref, orderBy('updatedAt', 'desc'))
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const remoteMemos: Memo[] = []
+    const q = query(ref/* , orderBy('updatedAt', 'desc') */)
+    /* const unsubscribe = onSnapshot(q, (snapshot) => { */
+    /*       const remoteMemos = [] */
+    onSnapshot(q, (snapshot) => {
       snapshot.forEach((doc) => {
-        console.log('memo', doc.data())
-        const { bodyText, updatedAt } = doc.data()
+        console.log('memo', doc.id)
+        /*         const { bodyText, updatedAt } = doc.data()
         remoteMemos.push({
           id: doc.id,
           bodyText,
           updatedAt
-        })
+        }) */
       })
-      console.log(remoteMemos)//
-      setMemos(remoteMemos)
+      /*       console.log(remoteMemos)//
+      setMemos(remoteMemos) */
     })
-    return unsubscribe
+    /* return unsubscribe */
   }, [])
   return (
     <View style={styles.container}>
 
         <View>
-          {memos.map((memo) => <MemoListItem memo={memo} />)}
+         <MemoListItem />
+         <MemoListItem />
+         <MemoListItem />
         </View>
 
         <CircleButton onPress={handlePress}>
