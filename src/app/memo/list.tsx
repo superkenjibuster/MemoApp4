@@ -25,21 +25,24 @@ const List = (): JSX.Element => {
   useEffect(() => {
     if (auth.currentUser === null) { return }
     const ref = collection(db, `users/${auth.currentUser.uid}/memos`)
-    const q = query(ref/* , orderBy('updatedAt', 'desc') */)
+    const q = query(ref/* , orderBy('updateAt', 'desc') */)
     /* const unsubscribe = onSnapshot(q, (snapshot) => { */
-    /*       const remoteMemos = [] */
+    const remoteMemos = []
+
     onSnapshot(q, (snapshot) => {
       snapshot.forEach((doc) => {
-        console.log('memo', doc.id)
-        /*         const { bodyText, updatedAt } = doc.data()
+        const data = doc.data()
+        console.log(doc.id, 'bodyText', data.bodyText.substr(0, 10), 'updateAt', data.updateAt)
+        /* console.log('memo', doc.id) */
+        /* const { bodyText, updateAt } = doc.data() */
         remoteMemos.push({
           id: doc.id,
-          bodyText,
-          updatedAt
-        }) */
+          bodyText: data.bodyText,
+          updateAt: data.updateAt
+        })
       })
-      /*       console.log(remoteMemos)//
-      setMemos(remoteMemos) */
+      console.log('remoteMemos', remoteMemos)
+      /*       setMemos(remoteMemos) */
     })
     /* return unsubscribe */
   }, [])
